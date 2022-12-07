@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/models/news.dart';
 import 'package:news_app/widgets/breaking_news_card.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:news_app/widgets/news_list_tile.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -37,7 +40,33 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                CarouselSlider.builder(itemCount: News)
+                CarouselSlider.builder(
+                    itemCount: NewsData.breakingNewsData.length,
+                    itemBuilder: (context, index, id) =>
+                        BreakingNewsCard(NewsData.breakingNewsData[index]),
+                    options: CarouselOptions(
+                      aspectRatio: 16 / 9,
+                      enableInfiniteScroll: false,
+                      enlargeCenterPage: true,
+                    )),
+                SizedBox(
+                  height: 40.0,
+                ),
+                Text(
+                  "Recent News",
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 16.0,
+                ),
+                Column(
+                  children: NewsData.recentNewsData
+                      .map((e) => NewsListTile(e))
+                      .toList(),
+                )
               ],
             )),
       ),

@@ -1,11 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/models/news.dart';
+import 'package:news_app/service/api_service.dart';
 import 'package:news_app/widgets/breaking_news_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:news_app/widgets/news_list_tile.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late Future<List<NewsData>> futureBreakingNewsData;
+  late Future<List<NewsData>> futureRecentNewsData;
+  late List<NewsData> _breakingNewsData;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    futureBreakingNewsData = getBreakingNewsData();
+    getNewsData();
+  }
+
+  Future<void> getNewsData() async {
+    _breakingNewsData = await getBreakingNewsData();
+    setState(() {
+      _isLoading = false;
+    });
+    print(_breakingNewsData);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +66,40 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: 20,
                 ),
-                CarouselSlider.builder(
-                    itemCount: NewsData.breakingNewsData.length,
-                    itemBuilder: (context, index, id) =>
-                        BreakingNewsCard(NewsData.breakingNewsData[index]),
-                    options: CarouselOptions(
-                      aspectRatio: 16 / 9,
-                      enableInfiniteScroll: false,
-                      enlargeCenterPage: true,
-                    )),
+                FutureBuilder<List<NewsData>>(
+                  future: futureBreakingNewsData,
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      List<NewsData> news = snapshot.data!;
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          CarouselSlider.builder(
+                            itemCount: news.length,
+                            itemBuilder: (context, index, id) =>
+                                BreakingNewsCard(
+                                    _breakingNewsData[index].title,
+                                    _breakingNewsData[index].author,
+                                    _breakingNewsData[index].content,
+                                    _breakingNewsData[index].urlToImage),
+                            options: CarouselOptions(
+                              aspectRatio: 16 / 9,
+                              enableInfiniteScroll: false,
+                              enlargeCenterPage: true,
+                            ),
+                          ),
+                        ],
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('${snapshot.error}');
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
+                ),
                 SizedBox(
                   height: 40.0,
                 ),
@@ -62,11 +113,11 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                   height: 16.0,
                 ),
-                Column(
-                  children: NewsData.recentNewsData
-                      .map((e) => NewsListTile(e))
-                      .toList(),
-                )
+                // Column(
+                //   children: NewsData.recentNewsData
+                //       .map((e) => NewsListTile(e))
+                //       .toList(),
+                // )
               ],
             )),
       ),

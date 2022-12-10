@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _isLoading = false;
     });
-    print(_breakingNewsData);
+    //print(_breakingNewsData);
   }
 
   @override
@@ -68,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 FutureBuilder<List<NewsData>>(
                   future: futureBreakingNewsData,
+                  initialData: const [],
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.hasData) {
                       List<NewsData> news = snapshot.data!;

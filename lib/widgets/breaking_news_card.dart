@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
 import 'package:news_app/screens/details_screen.dart';
 
@@ -30,13 +31,21 @@ class _BreakingNewsCardState extends State<BreakingNewsCard> {
       child: Hero(
         tag: "${widget.title}",
         child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30.0),
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: NetworkImage(widget.urlToImage!),
-            ),
-          ),
+          decoration: (widget.urlToImage != 'null UrlToImage')
+              ? BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(widget.urlToImage!),
+                  ),
+                )
+              : BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: defaultUrlToImage,
+                  ),
+                ),
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30.0),
@@ -51,24 +60,28 @@ class _BreakingNewsCardState extends State<BreakingNewsCard> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.title!,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+                widget.title == 'null Title'
+                    ? defaultTitle
+                    : Text(
+                        widget.title!,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                 SizedBox(
                   height: 8.0,
                 ),
-                Text(
-                  widget.author!,
-                  style: TextStyle(
-                      color: Colors.white54,
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal),
-                )
+                widget.author == 'null Author'
+                    ? defaultAuthor
+                    : Text(
+                        widget.author!,
+                        style: TextStyle(
+                            color: Colors.white54,
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal),
+                      )
               ],
             ),
           ),

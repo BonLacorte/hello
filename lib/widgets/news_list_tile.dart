@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
 import 'package:news_app/screens/details_screen.dart';
 
@@ -41,16 +42,27 @@ class _NewsListTileState extends State<NewsListTile> {
               flex: 3,
               child: Hero(
                 tag: "${widget.title}",
-                child: Container(
-                  height: 100,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    image: DecorationImage(
-                      image: NetworkImage(widget.urlToImage!),
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
-                ),
+                child: widget.urlToImage == 'null UrlToImage'
+                    ? Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          image: const DecorationImage(
+                            image: NetworkImage(defaultUrlToImage),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      )
+                    : Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          image: DecorationImage(
+                            image: NetworkImage(widget.urlToImage!),
+                            fit: BoxFit.fitHeight,
+                          ),
+                        ),
+                      ),
               ),
             ),
             SizedBox(
@@ -60,19 +72,24 @@ class _NewsListTileState extends State<NewsListTile> {
                 flex: 5,
                 child: Column(
                   children: [
-                    Text(
-                      widget.title!,
-                      style: TextStyle(
-                          color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
+                    widget.title == 'null Title'
+                        ? defaultTitle
+                        : Text(
+                            widget.title!,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
                     SizedBox(
                       height: 8.0,
                     ),
-                    Text(
-                      widget.content!,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: Colors.white54),
-                    )
+                    widget.content == 'null Content'
+                        ? defaultContent
+                        : Text(
+                            widget.content!,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(color: Colors.white54),
+                          )
                   ],
                 ))
           ],

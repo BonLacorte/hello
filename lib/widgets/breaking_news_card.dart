@@ -19,73 +19,72 @@ class BreakingNewsCard extends StatefulWidget {
 class _BreakingNewsCardState extends State<BreakingNewsCard> {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DetailScreen(widget.title, widget.author,
-                  widget.content, widget.urlToImage),
-            ));
-      },
-      child: Hero(
-        tag: "${widget.title}",
-        child: Container(
-          decoration: (widget.urlToImage != 'null UrlToImage')
-              ? BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.0),
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: NetworkImage(widget.urlToImage!),
-                  ),
-                )
-              : BoxDecoration(
-                  borderRadius: BorderRadius.circular(30.0),
-                  image: DecorationImage(
-                    fit: BoxFit.fill,
-                    image: defaultUrlToImage,
-                  ),
+    return Card(
+      elevation: 1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+      color: Colors.white,
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.fromLTRB(8, 8, 8, 10),
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailScreen(widget.title,
+                          widget.author, widget.content, widget.urlToImage),
+                    ));
+              },
+              child: Hero(
+                tag: "${widget.title}",
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: widget.urlToImage == 'null UrlToImage'
+                      ? Image.network(defaultUrlToImage,
+                          width: 300, height: 150, fit: BoxFit.fill)
+                      : Image.network(widget.urlToImage!,
+                          width: 300, height: 150, fit: BoxFit.fill),
                 ),
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(30.0),
-              gradient: LinearGradient(
-                colors: [Colors.transparent, Colors.black],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
               ),
             ),
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                widget.title == 'null Title'
-                    ? defaultTitle
-                    : Text(
-                        widget.title!,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                widget.author == 'null Author'
-                    ? defaultAuthor
-                    : Text(
-                        widget.author!,
-                        style: TextStyle(
-                            color: Colors.white54,
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal),
-                      )
-              ],
-            ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: Container(
+              child: Column(
+                children: [
+                  widget.title == 'null Title'
+                      ? defaultTitle
+                      : Text(
+                          widget.title!,
+                          //overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                  SizedBox(
+                    height: 8.0,
+                  ),
+                  widget.author == 'null Author'
+                      ? defaultAuthor
+                      : Text(
+                          widget.author!,
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

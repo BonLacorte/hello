@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/models/news.dart';
 import 'package:news_app/service/api_service.dart';
+import 'package:news_app/service/api_service_worldwide.dart';
 import 'package:news_app/widgets/breaking_news_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:news_app/widgets/category_tabs.dart';
 import 'package:news_app/widgets/news_list_tile.dart';
+import 'package:news_app/widgets/search_header.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,18 +17,21 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late Future<List<NewsData>> futureBreakingNewsData;
-  late Future<List<NewsData>> futureRecentNewsData;
+  late Future<List<NewsData>> futureWorldwideNewsData;
   late List<NewsData> _breakingNewsData;
+  late List<NewsData> _worldwideNewsData;
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
     futureBreakingNewsData = getBreakingNewsData();
-    getNewsData();
+    futureWorldwideNewsData = getWorldwideNewsData();
+    getNewsData1();
+    getNewsData2();
   }
 
-  Future<void> getNewsData() async {
+  Future<void> getNewsData1() async {
     _breakingNewsData = await getBreakingNewsData();
     setState(() {
       _isLoading = false;
@@ -33,9 +39,18 @@ class _HomeScreenState extends State<HomeScreen> {
     //print(_breakingNewsData);
   }
 
+  Future<void> getNewsData2() async {
+    _worldwideNewsData = await getWorldwideNewsData();
+    setState(() {
+      _isLoading = false;
+    });
+    print(_breakingNewsData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.transparent,
@@ -59,12 +74,13 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                SearchHeader(),
                 Text(
-                  'Breaking News',
+                  'News in Philippines',
                   style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 FutureBuilder<List<NewsData>>(
                   future: futureBreakingNewsData,
@@ -85,7 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     _breakingNewsData[index].content,
                                     _breakingNewsData[index].urlToImage),
                             options: CarouselOptions(
-                              aspectRatio: 16 / 9,
+                              height: 300,
+                              //aspectRatio: 2 / 2.5,
                               enableInfiniteScroll: false,
                               enlargeCenterPage: true,
                             ),
@@ -102,17 +119,51 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 SizedBox(
-                  height: 40.0,
+                  height: 10.0,
                 ),
                 Text(
-                  "Recent News",
+                  "Explore",
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(
-                  height: 16.0,
+                  height: 10.0,
+                ),
+                Container(
+                  child: const SingleChildScrollView(
+                      scrollDirection: Axis.horizontal, child: CategoryTabs()),
+                ),
+                FutureBuilder<List<NewsData>>(
+                  future: futureWorldwideNewsData,
+                  initialData: const [],
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.hasData) {
+                      List<NewsData> news = snapshot.data!;
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ListView.builder(
+                            itemCount: 5,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) => NewsListTile(
+                                _worldwideNewsData[index].title,
+                                _worldwideNewsData[index].author,
+                                _worldwideNewsData[index].content,
+                                _worldwideNewsData[index].urlToImage),
+                          ),
+                        ],
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('${snapshot.error}');
+                    } else {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
                 ),
                 // Column(
                 //   children: NewsData.recentNewsData
@@ -135,6 +186,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 label: "Home",
                 backgroundColor: Colors.transparent,
               ),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.search_sharp),
+                  label: "Explore",
+                  backgroundColor: Colors.transparent),
               BottomNavigationBarItem(
                   icon: Icon(Icons.bookmark),
                   label: "Bookmark",

@@ -1,18 +1,38 @@
 import 'package:news_app/models/news.dart';
 import 'dart:convert';
+import 'dart:math';
 import 'package:http/http.dart' as http;
 
-Future<List<NewsData>> getWorldwideNewsData() async {
-  final apiKey = 'ba7df744c6e84c2a95744e72c65ffb92';
-  final url =
-      'https://newsapi.org/v2/everything?q=&apiKey=ba7df744c6e84c2a95744e72c65ffb92';
+Future<List<NewsData>> getRecommendedNewsData() async {
+  final apiKey = '53d9af9fab3f492da11dfdbb69a1dcac';
+  final url;
+  final String randomCategory;
+
+  List<String> strings = [
+    'business',
+    'entertainment',
+    'general',
+    'health',
+    'science',
+    'sports',
+    'technology'
+  ];
+  final random = Random.secure();
+  randomCategory = strings[random.nextInt(strings.length)];
+  //randomCategory = 'business';
+  url =
+      'https://newsapi.org/v2/top-headlines?country=ph&category=$randomCategory&apiKey=53d9af9fab3f492da11dfdbb69a1dcac';
+  //'https://newsapi.org/v2/top-headlines?country=us&category=$randomCategory&apiKey=ba7df744c6e84c2a95744e72c65ffb92'
+  //print(url);
+
   final response =
       await http.get(Uri.parse(url), headers: {'X-Api-Key': apiKey});
 
   //Map data = jsonDecode(source)
   if (response.statusCode == 200) {
-    //print(response.body);
+    //print('This is response.body = $response.body');
     Map jsonResponse = jsonDecode(response.body);
+    //print('This is jsonResponse = $jsonResponse');
     List _temp = [];
     //print(jsonResponse['articles']);
 

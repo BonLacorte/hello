@@ -10,11 +10,11 @@ class SearchHeader extends StatelessWidget {
       child: Row(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
+            padding: const EdgeInsets.only(bottom: 20),
             child: Row(
               children: [
                 Container(
-                  width: size.width * 0.86,
+                  width: size.width * 0.90,
                   height: 44,
                   decoration: BoxDecoration(
                       color: Colors.grey[200],

@@ -29,11 +29,11 @@ class _NewsListTileState extends State<NewsListTile> {
       },
       child: Container(
         width: double.infinity,
-        margin: EdgeInsets.only(bottom: 20.0),
+        margin: EdgeInsets.only(bottom: 10.0),
         padding: EdgeInsets.all(12.0),
         height: 130,
         decoration: BoxDecoration(
-          color: Colors.black,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(26.0),
         ),
         child: Row(
@@ -77,7 +77,7 @@ class _NewsListTileState extends State<NewsListTile> {
                         : Text(
                             widget.title!,
                             style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontWeight: FontWeight.bold),
                           ),
                     SizedBox(
@@ -88,7 +88,7 @@ class _NewsListTileState extends State<NewsListTile> {
                         : Text(
                             widget.content!,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.white54),
+                            style: TextStyle(color: Colors.black54),
                           )
                   ],
                 ))

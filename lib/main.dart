@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/screens/home_screen.dart';
+import 'package:news_app/screens/sample_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +14,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'News News News',
       theme: ThemeData.light(),
-      home: const HomeScreen(),
+      home: SampleScreen(),
+      //home: SampleScreen(),
     );
   }
 }

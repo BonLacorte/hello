@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
-import 'package:news_app/service/api_service.dart';
-import 'package:news_app/service/api_service_worldwide.dart';
+import 'package:news_app/service/api_service_country.dart';
+import 'package:news_app/service/api_service_recommended.dart';
 import 'package:news_app/widgets/breaking_news_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:news_app/widgets/category_tabs.dart';
@@ -16,35 +17,43 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late Future<List<NewsData>> futureBreakingNewsData;
-  late Future<List<NewsData>> futureWorldwideNewsData;
-  late List<NewsData> _breakingNewsData;
-  late List<NewsData> _worldwideNewsData;
+  late Future<List<NewsData>> futureCountryNewsData;
+  late Future<List<NewsData>> futureRecommendedNewsData;
+  late List<NewsData> _countryNewsData;
+  late List<NewsData> _recommendNewsData;
   bool _isLoading = true;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    futureBreakingNewsData = getBreakingNewsData();
-    futureWorldwideNewsData = getWorldwideNewsData();
+    futureCountryNewsData = getCountryNewsData();
+    futureRecommendedNewsData = getRecommendedNewsData();
+
     getNewsData1();
     getNewsData2();
   }
 
   Future<void> getNewsData1() async {
-    _breakingNewsData = await getBreakingNewsData();
+    _countryNewsData = await getCountryNewsData();
     setState(() {
       _isLoading = false;
     });
-    //print(_breakingNewsData);
+    print(_countryNewsData);
   }
 
   Future<void> getNewsData2() async {
-    _worldwideNewsData = await getWorldwideNewsData();
+    _recommendNewsData = await getRecommendedNewsData();
     setState(() {
       _isLoading = false;
     });
-    print(_breakingNewsData);
+    print(_recommendNewsData);
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
@@ -54,9 +63,36 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.transparent,
-        title: Text(
-          "NewsApp",
-          style: TextStyle(color: Colors.black),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.transparent,
+              backgroundImage: NetworkImage(profileImage),
+
+              // border: Border.all(
+              //   color: Colors.white,
+              //   width: 4.0,
+              // ),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Welcome Back!",
+                  style: TextStyle(color: Colors.black54, fontSize: 14),
+                ),
+                Text(
+                  "Bon L.",
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
+              ],
+            ),
+          ],
         ),
         actions: [
           IconButton(
@@ -68,142 +104,151 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Padding(
-            padding: EdgeInsets.all(16),
+        child: Container(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SearchHeader(),
-                Text(
-                  'News in Philippines',
-                  style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                FutureBuilder<List<NewsData>>(
-                  future: futureBreakingNewsData,
-                  initialData: const [],
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      List<NewsData> news = snapshot.data!;
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CarouselSlider.builder(
-                            itemCount: news.length,
-                            itemBuilder: (context, index, id) =>
-                                BreakingNewsCard(
-                                    _breakingNewsData[index].title,
-                                    _breakingNewsData[index].author,
-                                    _breakingNewsData[index].content,
-                                    _breakingNewsData[index].urlToImage),
-                            options: CarouselOptions(
-                              height: 300,
-                              //aspectRatio: 2 / 2.5,
-                              enableInfiniteScroll: false,
-                              enlargeCenterPage: true,
-                            ),
-                          ),
-                        ],
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text('${snapshot.error}');
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Text(
-                  "Explore",
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Container(
-                  child: const SingleChildScrollView(
-                      scrollDirection: Axis.horizontal, child: CategoryTabs()),
-                ),
-                FutureBuilder<List<NewsData>>(
-                  future: futureWorldwideNewsData,
-                  initialData: const [],
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.hasData) {
-                      List<NewsData> news = snapshot.data!;
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          ListView.builder(
-                            itemCount: 5,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) => NewsListTile(
-                                _worldwideNewsData[index].title,
-                                _worldwideNewsData[index].author,
-                                _worldwideNewsData[index].content,
-                                _worldwideNewsData[index].urlToImage),
-                          ),
-                        ],
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text('${snapshot.error}');
-                    } else {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                ),
-                // Column(
-                //   children: NewsData.recentNewsData
-                //       .map((e) => NewsListTile(e))
-                //       .toList(),
-                // )
-              ],
-            )),
-      ),
-      bottomNavigationBar: Container(
-        margin: EdgeInsets.all(12),
-        decoration: BoxDecoration(
-            color: Colors.black, borderRadius: BorderRadius.circular(16)),
-        child: BottomNavigationBar(
-            elevation: 0.0,
-            selectedItemColor: Colors.orange[900],
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: "Home",
-                backgroundColor: Colors.transparent,
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                'News in Philippines',
+                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
               ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.search_sharp),
-                  label: "Explore",
-                  backgroundColor: Colors.transparent),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.bookmark),
-                  label: "Bookmark",
-                  backgroundColor: Colors.transparent),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.rss_feed_rounded),
-                  label: "Feed",
-                  backgroundColor: Colors.transparent),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.person),
-                  label: "Profile",
-                  backgroundColor: Colors.transparent),
-            ]),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : FutureBuilder<List<NewsData>>(
+                    future: futureCountryNewsData,
+                    initialData: const [],
+                    builder: (BuildContext context, AsyncSnapshot snapshot) {
+                      if (snapshot.hasData) {
+                        List<NewsData> news = snapshot.data!;
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            CarouselSlider.builder(
+                              itemCount: 2, //news.length,
+                              itemBuilder: (context, index, id) =>
+                                  BreakingNewsCard(
+                                      _countryNewsData[index].title,
+                                      _countryNewsData[index].author,
+                                      _countryNewsData[index].content,
+                                      _countryNewsData[index].urlToImage),
+                              options: CarouselOptions(
+                                height: 325,
+                                //aspectRatio: 2 / 2.5,
+                                enableInfiniteScroll: false,
+                                enlargeCenterPage: false,
+                                pageSnapping: true,
+                                viewportFraction: 0.60,
+                              ),
+                            ),
+                          ],
+                        );
+                      } else if (snapshot.hasError) {
+                        return Text('${snapshot.error}');
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  ),
+            SizedBox(
+              height: 10.0,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Text(
+                "Recommended",
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 10.0,
+            ),
+            // Padding(
+            //   padding: EdgeInsets.only(left: 10),
+            //   child: const SingleChildScrollView(
+            //       scrollDirection: Axis.horizontal, child: CategoryTabs()),
+            // ),
+            _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: FutureBuilder<List<NewsData>>(
+                      future: futureRecommendedNewsData,
+                      initialData: const [],
+                      builder: (BuildContext context, AsyncSnapshot snapshot) {
+                        if (snapshot.hasData) {
+                          List<NewsData> news = snapshot.data!;
+                          return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ListView.builder(
+                                itemCount: 10,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) => NewsListTile(
+                                    _recommendNewsData[index].title,
+                                    _recommendNewsData[index].author,
+                                    _recommendNewsData[index].content,
+                                    _recommendNewsData[index].urlToImage),
+                              ),
+                            ],
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text('${snapshot.error}');
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
+                    ),
+                  ),
+          ],
+        )),
       ),
+      // bottomNavigationBar: Container(
+      //   margin: EdgeInsets.all(12),
+      //   decoration: BoxDecoration(
+      //       color: Colors.black, borderRadius: BorderRadius.circular(16)),
+      //   child: BottomNavigationBar(
+      //       elevation: 0.0,
+      //       selectedItemColor: Colors.orange[900],
+      //       items: [
+      //         BottomNavigationBarItem(
+      //           icon: Icon(Icons.home),
+      //           label: "Home",
+      //           backgroundColor: Colors.transparent,
+      //         ),
+      //         BottomNavigationBarItem(
+      //             icon: Icon(Icons.search_sharp),
+      //             label: "Search",
+      //             backgroundColor: Colors.transparent),
+      //         BottomNavigationBarItem(
+      //             icon: Icon(Icons.bookmark),
+      //             label: "Bookmark",
+      //             backgroundColor: Colors.transparent),
+      //       ]),
+      // ),
     );
   }
 }

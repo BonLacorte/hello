@@ -17,9 +17,9 @@ class SearchHeader extends StatelessWidget {
                   width: size.width * 0.90,
                   height: 44,
                   decoration: BoxDecoration(
-                      color: Colors.grey[200],
+                      color: Colors.white,
                       borderRadius: BorderRadius.circular(22),
-                      border: Border.all(color: Colors.grey[300]!)),
+                      border: Border.all(color: Colors.grey[500]!)),
                   child: TextFormField(
                     onFieldSubmitted: (value) {},
                     style: const TextStyle(fontSize: 16),

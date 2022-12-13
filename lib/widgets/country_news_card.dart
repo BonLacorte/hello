@@ -3,20 +3,23 @@ import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
 import 'package:news_app/screens/details_screen.dart';
 
-class BreakingNewsCard extends StatefulWidget {
+class CountryNewsCard extends StatefulWidget {
   //final NewsData data;
   final String? title;
   final String? author;
   final String? content;
   final String? urlToImage;
-  const BreakingNewsCard(this.title, this.author, this.content, this.urlToImage,
+  final String? publishedAt;
+  final String category;
+  const CountryNewsCard(this.title, this.author, this.content, this.urlToImage,
+      this.publishedAt, this.category,
       {super.key});
 
   @override
-  State<BreakingNewsCard> createState() => _BreakingNewsCardState();
+  State<CountryNewsCard> createState() => _CountryNewsCardState();
 }
 
-class _BreakingNewsCardState extends State<BreakingNewsCard> {
+class _CountryNewsCardState extends State<CountryNewsCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -35,8 +38,12 @@ class _BreakingNewsCardState extends State<BreakingNewsCard> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DetailScreen(widget.title,
-                            widget.author, widget.content, widget.urlToImage),
+                        builder: (context) => DetailScreen(
+                            widget.title,
+                            widget.author,
+                            widget.content,
+                            widget.urlToImage,
+                            widget.category),
                       ));
                 },
                 child: Hero(
@@ -87,7 +94,23 @@ class _BreakingNewsCardState extends State<BreakingNewsCard> {
                                 ),
                               ),
                       ],
-                    )
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.publishedAt!,
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),

@@ -3,19 +3,22 @@ import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
 import 'package:news_app/screens/details_screen.dart';
 
-class NewsListTile extends StatefulWidget {
+class CategoryNewsListTile extends StatefulWidget {
   final String? title;
   final String? author;
   final String? content;
   final String? urlToImage;
-  const NewsListTile(this.title, this.author, this.content, this.urlToImage,
+  final String? publishedAt;
+  final String category;
+  const CategoryNewsListTile(this.title, this.author, this.content,
+      this.urlToImage, this.publishedAt, this.category,
       {super.key});
 
   @override
-  State<NewsListTile> createState() => _NewsListTileState();
+  State<CategoryNewsListTile> createState() => _CategoryNewsListTile();
 }
 
-class _NewsListTileState extends State<NewsListTile> {
+class _CategoryNewsListTile extends State<CategoryNewsListTile> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -24,7 +27,7 @@ class _NewsListTileState extends State<NewsListTile> {
             context,
             MaterialPageRoute(
               builder: (context) => DetailScreen(widget.title, widget.author,
-                  widget.content, widget.urlToImage),
+                  widget.content, widget.urlToImage, widget.category),
             ));
       },
       child: Container(
@@ -83,13 +86,32 @@ class _NewsListTileState extends State<NewsListTile> {
                     SizedBox(
                       height: 8.0,
                     ),
-                    widget.content == 'null Content'
-                        ? defaultContent
-                        : Text(
-                            widget.content!,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.black54),
-                          )
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${widget.content!.substring(0, 29)}...',
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(color: Colors.black54),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.publishedAt!,
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 14,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ],
+                    ),
                   ],
                 ))
           ],

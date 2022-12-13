@@ -2,15 +2,18 @@ class NewsData {
   String? title;
   String? author;
   String? content;
+  String? url;
   String? urlToImage;
+  String? publishedAt;
   //String? date;
 
   NewsData({
     this.title,
     this.author,
     this.content,
+    this.url,
     this.urlToImage,
-    //this.date,
+    this.publishedAt,
   });
 
   factory NewsData.fromJson(dynamic json) {
@@ -19,10 +22,9 @@ class NewsData {
       title: json['title'],
       author: json['author'],
       content: json['content'],
-      //url: json['url'],
+      url: json['url'],
       urlToImage: json['urlToImage'],
-      //date: json['publishedAt'],
-      //publishedAt: DateTime.parse(json['publishedAt']),
+      publishedAt: json['publishedAt'],
     );
   }
 
@@ -32,7 +34,7 @@ class NewsData {
 
   @override
   String toString() {
-    return 'NewsData {title: $title, author: $author, content: $content, urlToImage: $urlToImage}';
+    return 'NewsData {title: $title, author: $author, content: $content, url: $url, urlToImage: $urlToImage, publishedAt: $publishedAt}';
   }
   // static news for now
   // static List<NewsData> breakingNewsData = [

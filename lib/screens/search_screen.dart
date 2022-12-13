@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/models/category.dart';
 import 'package:news_app/widgets/category_tabs.dart';
+import 'package:news_app/widgets/search_category_card.dart';
 import 'package:news_app/widgets/search_header.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -46,7 +48,22 @@ class _SearchScreenState extends State<SearchScreen> {
               // ),
               Text(
                 "Explore Categories",
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(
+                height: 5,
+              ),
+              GridView.builder(
+                itemCount: Category.searchCategoryList.length,
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                    mainAxisExtent: 125),
+                itemBuilder: (BuildContext context, int index) {
+                  return SearchCategoryCard(Category.searchCategoryList[index]);
+                },
               ),
             ],
           ),

@@ -53,7 +53,7 @@ class _SampleScreenState extends State<SampleScreen> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.orange[900],
+        selectedItemColor: Colors.blue[500],
         onTap: _onItemTapped,
       ),
     );

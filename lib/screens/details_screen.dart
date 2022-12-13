@@ -6,7 +6,9 @@ class DetailScreen extends StatefulWidget {
   final String? author;
   final String? content;
   final String? urlToImage;
-  DetailScreen(this.title, this.author, this.content, this.urlToImage,
+  final String category;
+  DetailScreen(
+      this.title, this.author, this.content, this.urlToImage, this.category,
       {super.key});
 
   @override
@@ -17,10 +19,10 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        backgroundColor: Colors.white,
         elevation: 0.0,
-        iconTheme: IconThemeData(color: Colors.orange.shade900),
+        iconTheme: IconThemeData(color: Colors.blue.shade500),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -28,6 +30,10 @@ class _DetailScreenState extends State<DetailScreen> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Text(
+              widget.category,
+              style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+            ),
             Text(
               widget.title!,
               style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),

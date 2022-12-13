@@ -3,13 +3,15 @@ import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
 import 'package:news_app/service/api_service_country.dart';
 import 'package:news_app/service/api_service_recommended.dart';
-import 'package:news_app/widgets/breaking_news_card.dart';
+import 'package:news_app/widgets/country_news_card.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:news_app/widgets/category_tabs.dart';
-import 'package:news_app/widgets/news_list_tile.dart';
+import 'package:news_app/widgets/global_news_list_tile.dart';
 import 'package:news_app/widgets/search_header.dart';
 
 class HomeScreen extends StatefulWidget {
+  final String countryCategory = 'country';
+  final String worldwideCategory = 'worldwide';
   const HomeScreen({super.key});
 
   @override
@@ -138,13 +140,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             CarouselSlider.builder(
-                              itemCount: 2, //news.length,
+                              itemCount: news.length, //news.length,
                               itemBuilder: (context, index, id) =>
-                                  BreakingNewsCard(
+                                  CountryNewsCard(
                                       _countryNewsData[index].title,
                                       _countryNewsData[index].author,
                                       _countryNewsData[index].content,
-                                      _countryNewsData[index].urlToImage),
+                                      _countryNewsData[index].urlToImage,
+                                      _countryNewsData[index].publishedAt,
+                                      widget.countryCategory),
                               options: CarouselOptions(
                                 height: 325,
                                 //aspectRatio: 2 / 2.5,
@@ -171,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.only(left: 10),
               child: Text(
-                "Recommended",
+                "Global News",
                 style: TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
@@ -205,11 +209,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               ListView.builder(
                                 itemCount: 10,
                                 shrinkWrap: true,
-                                itemBuilder: (context, index) => NewsListTile(
+                                itemBuilder: (context, index) => GlobalListTile(
                                     _recommendNewsData[index].title,
                                     _recommendNewsData[index].author,
                                     _recommendNewsData[index].content,
-                                    _recommendNewsData[index].urlToImage),
+                                    _recommendNewsData[index].urlToImage,
+                                    _recommendNewsData[index].publishedAt,
+                                    widget.worldwideCategory),
                               ),
                             ],
                           );

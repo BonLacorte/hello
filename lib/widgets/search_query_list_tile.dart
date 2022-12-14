@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
-import 'package:news_app/screens/details_screen_home.dart';
+import 'package:news_app/screens/details_screen_category.dart';
 
-class GlobalListTile extends StatefulWidget {
+class CategoryNewsListTile extends StatefulWidget {
   final String? title;
   final String? author;
   final String? content;
@@ -11,15 +11,16 @@ class GlobalListTile extends StatefulWidget {
   final String? urlToImage;
   final String? publishedAt;
   final String category;
-  const GlobalListTile(this.title, this.author, this.content, this.url,
-      this.urlToImage, this.publishedAt, this.category,
+  final String query;
+  const CategoryNewsListTile(this.title, this.author, this.content, this.url,
+      this.urlToImage, this.publishedAt, this.category, this.query,
       {super.key});
 
   @override
-  State<GlobalListTile> createState() => _GlobalListTileState();
+  State<CategoryNewsListTile> createState() => _CategoryNewsListTile();
 }
 
-class _GlobalListTileState extends State<GlobalListTile> {
+class _CategoryNewsListTile extends State<CategoryNewsListTile> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -27,7 +28,7 @@ class _GlobalListTileState extends State<GlobalListTile> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DetailScreenHome(
+              builder: (context) => DetailScreenCategory(
                   widget.title,
                   widget.author,
                   widget.content,
@@ -82,15 +83,15 @@ class _GlobalListTileState extends State<GlobalListTile> {
                 flex: 5,
                 child: Column(
                   children: [
-                    widget.title!.length < 52
+                    widget.title!.length < 57
                         ? Text(
-                            '${widget.title!}...',
+                            '${widget.title!}',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),
                           )
                         : Text(
-                            '${widget.title!.substring(0, 52)}...',
+                            '${widget.title!.substring(0, 57)}',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),

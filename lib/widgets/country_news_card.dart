@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
-import 'package:news_app/screens/details_screen.dart';
+import 'package:news_app/screens/details_screen_home.dart';
 
 class CountryNewsCard extends StatefulWidget {
   //final NewsData data;
   final String? title;
   final String? author;
   final String? content;
+  final String? url;
   final String? urlToImage;
   final String? publishedAt;
   final String category;
-  const CountryNewsCard(this.title, this.author, this.content, this.urlToImage,
-      this.publishedAt, this.category,
+  const CountryNewsCard(this.title, this.author, this.content, this.url,
+      this.urlToImage, this.publishedAt, this.category,
       {super.key});
 
   @override
@@ -38,11 +39,13 @@ class _CountryNewsCardState extends State<CountryNewsCard> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => DetailScreen(
+                        builder: (context) => DetailScreenHome(
                             widget.title,
                             widget.author,
                             widget.content,
+                            widget.url,
                             widget.urlToImage,
+                            widget.publishedAt,
                             widget.category),
                       ));
                 },
@@ -66,10 +69,15 @@ class _CountryNewsCardState extends State<CountryNewsCard> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    widget.title == 'null Title'
-                        ? defaultTitle
+                    widget.title!.length < 57
+                        ? Text(
+                            '${widget.title!}',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          )
                         : Text(
-                            widget.title!,
+                            '${widget.title!.substring(0, 57)}...',
                             //overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               color: Colors.black,

@@ -89,13 +89,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               ListView.builder(
-                                itemCount: 10,
+                                itemCount: news.length,
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) =>
                                     CategoryNewsListTile(
                                   _categoryNewsData[index].title,
                                   _categoryNewsData[index].author,
                                   _categoryNewsData[index].content,
+                                  _categoryNewsData[index].url,
                                   _categoryNewsData[index].urlToImage,
                                   _categoryNewsData[index].publishedAt,
                                   widget.title,

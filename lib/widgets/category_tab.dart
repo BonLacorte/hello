@@ -15,7 +15,7 @@ class CategoryTab extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(30),
       child: Container(
-        color: Colors.orange[900],
+        color: Colors.blue,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(

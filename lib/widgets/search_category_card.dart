@@ -27,28 +27,23 @@ class _SearchCategoryCardState extends State<SearchCategoryCard> {
               ));
         },
         child: Card(
-          elevation: 1,
+          elevation: 8,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
           ),
-          color: Colors.white,
-          child: Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: NetworkImage(widget.data.urlToImage))),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  widget.data.title,
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black),
-                )
-              ],
-            ),
+          color: Colors.blue[500],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                widget.data.title,
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              )
+            ],
           ),
         ),
       ),

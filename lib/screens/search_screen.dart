@@ -33,40 +33,37 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: SingleChildScrollView(
           child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SearchHeader(),
-              // Padding(
-              //   padding: EdgeInsets.only(left: 10),
-              //   child: const SingleChildScrollView(
-              //       scrollDirection: Axis.horizontal, child: CategoryTabs()),
-              // ),
-              Text(
-                "Explore Categories",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              GridView.builder(
-                itemCount: Category.searchCategoryList.length,
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    mainAxisExtent: 125),
-                itemBuilder: (BuildContext context, int index) {
-                  return SearchCategoryCard(Category.searchCategoryList[index]);
-                },
-              ),
-            ],
-          ),
+        padding: const EdgeInsets.only(left: 15, right: 5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SearchHeader(),
+            // Padding(
+            //   padding: EdgeInsets.only(left: 10),
+            //   child: const SingleChildScrollView(
+            //       scrollDirection: Axis.horizontal, child: CategoryTabs()),
+            // ),
+            Text(
+              "Explore Categories",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            GridView.builder(
+              itemCount: Category.searchCategoryList.length,
+              shrinkWrap: true,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  mainAxisExtent: 125),
+              itemBuilder: (BuildContext context, int index) {
+                return SearchCategoryCard(Category.searchCategoryList[index]);
+              },
+            ),
+          ],
         ),
       )),
     );

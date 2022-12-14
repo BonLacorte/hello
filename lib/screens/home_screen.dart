@@ -10,8 +10,8 @@ import 'package:news_app/widgets/global_news_list_tile.dart';
 import 'package:news_app/widgets/search_header.dart';
 
 class HomeScreen extends StatefulWidget {
-  final String countryCategory = 'country';
-  final String worldwideCategory = 'worldwide';
+  final String countryCategory = 'Nationwide';
+  final String worldwideCategory = 'Worldwide';
   const HomeScreen({super.key});
 
   @override
@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
               // ),
             ),
             SizedBox(
-              width: 10,
+              width: 15,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,10 +102,17 @@ class _HomeScreenState extends State<HomeScreen> {
               icon: Icon(
                 Icons.notifications_outlined,
                 color: Colors.black,
+              )),
+          IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.settings,
+                color: Colors.black,
               ))
         ],
       ),
       body: SingleChildScrollView(
+        //scrollDirection: Axis.horizontal,
         child: Container(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -117,9 +124,20 @@ class _HomeScreenState extends State<HomeScreen> {
 
             Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: Text(
-                'News in Philippines',
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              child: Row(
+                children: [
+                  Text(
+                    'News in the ',
+                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    'Philippines',
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
             ),
             SizedBox(
@@ -146,6 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       _countryNewsData[index].title,
                                       _countryNewsData[index].author,
                                       _countryNewsData[index].content,
+                                      _countryNewsData[index].url,
                                       _countryNewsData[index].urlToImage,
                                       _countryNewsData[index].publishedAt,
                                       widget.countryCategory),
@@ -174,12 +193,24 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Padding(
               padding: const EdgeInsets.only(left: 10),
-              child: Text(
-                "Global News",
-                style: TextStyle(
-                  fontSize: 26,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Row(
+                children: [
+                  Text(
+                    "Global ",
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    "News",
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontSize: 26,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(
@@ -206,16 +237,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              ListView.builder(
-                                itemCount: 10,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) => GlobalListTile(
-                                    _recommendNewsData[index].title,
-                                    _recommendNewsData[index].author,
-                                    _recommendNewsData[index].content,
-                                    _recommendNewsData[index].urlToImage,
-                                    _recommendNewsData[index].publishedAt,
-                                    widget.worldwideCategory),
+                              SingleChildScrollView(
+                                child: ListView.builder(
+                                  itemCount: 5,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) =>
+                                      GlobalListTile(
+                                          _recommendNewsData[index].title,
+                                          _recommendNewsData[index].author,
+                                          _recommendNewsData[index].content,
+                                          _recommendNewsData[index].url,
+                                          _recommendNewsData[index].urlToImage,
+                                          _recommendNewsData[index].publishedAt,
+                                          widget.worldwideCategory),
+                                ),
                               ),
                             ],
                           );

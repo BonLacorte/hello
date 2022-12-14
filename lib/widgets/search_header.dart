@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/screens/search_screen_query.dart';
 
 class SearchHeader extends StatelessWidget {
   const SearchHeader({super.key});
@@ -21,7 +22,13 @@ class SearchHeader extends StatelessWidget {
                       borderRadius: BorderRadius.circular(22),
                       border: Border.all(color: Colors.grey[500]!)),
                   child: TextFormField(
-                    onFieldSubmitted: (value) {},
+                    onFieldSubmitted: (query) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => SearchScreenQuery(query),
+                        ),
+                      );
+                    },
                     style: const TextStyle(fontSize: 16),
                     textAlignVertical: TextAlignVertical.center,
                     decoration: InputDecoration(

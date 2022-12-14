@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
-import 'package:news_app/screens/details_screen.dart';
+import 'package:news_app/screens/details_screen_category.dart';
 
 class CategoryNewsListTile extends StatefulWidget {
   final String? title;
   final String? author;
   final String? content;
+  final String? url;
   final String? urlToImage;
   final String? publishedAt;
   final String category;
-  const CategoryNewsListTile(this.title, this.author, this.content,
+  const CategoryNewsListTile(this.title, this.author, this.content, this.url,
       this.urlToImage, this.publishedAt, this.category,
       {super.key});
 
@@ -26,8 +27,14 @@ class _CategoryNewsListTile extends State<CategoryNewsListTile> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DetailScreen(widget.title, widget.author,
-                  widget.content, widget.urlToImage, widget.category),
+              builder: (context) => DetailScreenCategory(
+                  widget.title,
+                  widget.author,
+                  widget.content,
+                  widget.url,
+                  widget.urlToImage,
+                  widget.publishedAt,
+                  widget.category),
             ));
       },
       child: Container(
@@ -75,10 +82,15 @@ class _CategoryNewsListTile extends State<CategoryNewsListTile> {
                 flex: 5,
                 child: Column(
                   children: [
-                    widget.title == 'null Title'
-                        ? defaultTitle
+                    widget.title!.length < 57
+                        ? Text(
+                            '${widget.title!}',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          )
                         : Text(
-                            widget.title!,
+                            '${widget.title!.substring(0, 57)}',
                             style: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),

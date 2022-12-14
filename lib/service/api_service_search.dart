@@ -2,10 +2,10 @@ import 'package:news_app/models/news.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<List<NewsData>> getCountryNewsData() async {
+Future<List<NewsData>> getSearchNewsData(String query) async {
   final apiKey = '53d9af9fab3f492da11dfdbb69a1dcac';
   final url =
-      'https://newsapi.org/v2/top-headlines?country=ph&apiKey=53d9af9fab3f492da11dfdbb69a1dcac';
+      'https://newsapi.org/v2/everything?q=$query&apiKey=53d9af9fab3f492da11dfdbb69a1dcac';
   final response =
       await http.get(Uri.parse(url), headers: {'X-Api-Key': apiKey});
 

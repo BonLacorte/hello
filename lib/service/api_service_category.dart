@@ -29,14 +29,6 @@ Future<List<NewsData>> getCategoryNewsData(String category) async {
         limitedDate = i['publishedAt'];
         i['publishedAt'] = '${limitedDate.substring(0, 10)}';
 
-        if (i['title'] == null) {
-          i['title'] = 'null Title';
-        } else {
-          limitedTitle = i['title'];
-          i['title'] = limitedTitle.length < 60
-              ? limitedTitle
-              : '${limitedTitle.substring(0, 57)}...';
-        }
         if (i['urlToImage'] == null) {
           i['urlToImage'] = 'null UrlToImage';
         }

@@ -51,14 +51,9 @@ class _SearchScreenState extends State<SearchScreen> {
             SizedBox(
               height: 5,
             ),
-            GridView.builder(
+            ListView.builder(
               itemCount: Category.searchCategoryList.length,
               shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  mainAxisExtent: 125),
               itemBuilder: (BuildContext context, int index) {
                 return SearchCategoryCard(Category.searchCategoryList[index]);
               },

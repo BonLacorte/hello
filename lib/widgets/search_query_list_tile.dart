@@ -3,7 +3,7 @@ import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
 import 'package:news_app/screens/details_screen_category.dart';
 
-class CategoryNewsListTile extends StatefulWidget {
+class SearchQueryNewsListTile extends StatefulWidget {
   final String? title;
   final String? author;
   final String? content;
@@ -12,15 +12,15 @@ class CategoryNewsListTile extends StatefulWidget {
   final String? publishedAt;
   final String category;
   final String query;
-  const CategoryNewsListTile(this.title, this.author, this.content, this.url,
+  const SearchQueryNewsListTile(this.title, this.author, this.content, this.url,
       this.urlToImage, this.publishedAt, this.category, this.query,
       {super.key});
 
   @override
-  State<CategoryNewsListTile> createState() => _CategoryNewsListTile();
+  State<SearchQueryNewsListTile> createState() => _SearchQueryNewsListTile();
 }
 
-class _CategoryNewsListTile extends State<CategoryNewsListTile> {
+class _SearchQueryNewsListTile extends State<SearchQueryNewsListTile> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -38,96 +38,102 @@ class _CategoryNewsListTile extends State<CategoryNewsListTile> {
                   widget.category),
             ));
       },
-      child: Container(
-        width: double.infinity,
-        margin: EdgeInsets.only(bottom: 10.0),
-        padding: EdgeInsets.all(12.0),
-        height: 130,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(26.0),
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
-        child: Row(
-          children: [
-            Flexible(
-              flex: 3,
-              child: Hero(
-                tag: "${widget.title}",
-                child: widget.urlToImage == 'null UrlToImage'
-                    ? Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          image: const DecorationImage(
-                            image: NetworkImage(defaultUrlToImage),
-                            fit: BoxFit.fill,
+        elevation: 10,
+        child: Container(
+          width: double.infinity,
+          margin: EdgeInsets.only(bottom: 10.0),
+          padding: EdgeInsets.all(12.0),
+          height: 135,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(26.0),
+          ),
+          child: Row(
+            children: [
+              Flexible(
+                flex: 3,
+                child: Hero(
+                  tag: "${widget.title}",
+                  child: widget.urlToImage == 'null UrlToImage'
+                      ? Container(
+                          height: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            image: const DecorationImage(
+                              image: NetworkImage(defaultUrlToImage),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        )
+                      : Container(
+                          height: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            image: DecorationImage(
+                              image: NetworkImage(widget.urlToImage!),
+                              fit: BoxFit.fitHeight,
+                            ),
                           ),
                         ),
-                      )
-                    : Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          image: DecorationImage(
-                            image: NetworkImage(widget.urlToImage!),
-                            fit: BoxFit.fitHeight,
-                          ),
-                        ),
-                      ),
+                ),
               ),
-            ),
-            SizedBox(
-              width: 10,
-            ),
-            Flexible(
-                flex: 5,
-                child: Column(
-                  children: [
-                    widget.title!.length < 57
-                        ? Text(
-                            '${widget.title!}',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          )
-                        : Text(
-                            '${widget.title!.substring(0, 57)}',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
+              SizedBox(
+                width: 10,
+              ),
+              Flexible(
+                  flex: 5,
+                  child: Column(
+                    children: [
+                      widget.title!.length < 52
+                          ? Text(
+                              '${widget.title!}...',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            )
+                          : Text(
+                              '${widget.title!.substring(0, 52)}',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                      SizedBox(
+                        height: 8.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${widget.content!.substring(0, 27)}...',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(color: Colors.black54),
                           ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${widget.content!.substring(0, 29)}...',
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.black54),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 8.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.publishedAt!,
-                          style: TextStyle(
-                            color: Colors.black54,
-                            fontSize: 14,
-                            fontWeight: FontWeight.normal,
+                        ],
+                      ),
+                      SizedBox(
+                        height: 8.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.publishedAt!,
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ))
-          ],
+                        ],
+                      ),
+                    ],
+                  ))
+            ],
+          ),
         ),
       ),
     );

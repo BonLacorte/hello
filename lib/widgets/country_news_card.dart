@@ -25,7 +25,7 @@ class _CountryNewsCardState extends State<CountryNewsCard> {
   Widget build(BuildContext context) {
     return Container(
       child: Card(
-        elevation: 1,
+        elevation: 10,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),

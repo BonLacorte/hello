@@ -29,21 +29,29 @@ class _SearchCategoryCardState extends State<SearchCategoryCard> {
         child: Card(
           elevation: 8,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(10),
           ),
           color: Colors.blue[500],
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                widget.data.title,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              )
-            ],
+          child: Container(
+            height: 95,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                image: DecorationImage(
+                    image: AssetImage('assets/images/${widget.data.title}.png'),
+                    fit: BoxFit.fitWidth)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  widget.data.title,
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                )
+              ],
+            ),
           ),
         ),
       ),

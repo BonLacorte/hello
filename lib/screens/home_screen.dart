@@ -175,6 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 enlargeCenterPage: false,
                                 pageSnapping: true,
                                 viewportFraction: 0.60,
+                                initialPage: 0,
                               ),
                             ),
                           ],
@@ -239,6 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               SingleChildScrollView(
                                 child: ListView.builder(
+                                  controller: ScrollController(),
                                   itemCount: 5,
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) =>

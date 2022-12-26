@@ -35,7 +35,13 @@ dependencies:
     sdk: flutter
   flutter_carousel_slider: ^1.0.9
   http: ^0.13.5
+  get: ^4.6.5
   url_launcher: ^6.1.7
+  firebase_auth: ^4.2.1
+  firebase_core: ^2.4.0
+  firebase_storage: ^11.0.8
+  cloud_firestore: ^4.2.0
+  image_picker: ^0.8.6
 
 dev_dependencies:
 

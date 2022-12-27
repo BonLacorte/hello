@@ -29,27 +29,22 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  cached_network_image: ^3.2.3
   carousel_slider: ^4.1.1
+  cloud_firestore: ^4.2.0
   cupertino_icons: ^1.0.2
-  flutter:
-    sdk: flutter
-  flutter_carousel_slider: ^1.0.9
-  http: ^0.13.5
-  get: ^4.6.5
-  url_launcher: ^6.1.7
   firebase_auth: ^4.2.1
   firebase_core: ^2.4.0
   firebase_storage: ^11.0.8
-  cloud_firestore: ^4.2.0
+  flutter:
+    sdk: flutter
+  flutter_carousel_slider: ^1.0.9
+  get: ^4.6.5
+  http: ^0.13.5
   image_picker: ^0.8.6
+  url_launcher: ^6.1.7
 
 dev_dependencies:
-
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter

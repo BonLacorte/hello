@@ -3,6 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/controller/auth_controller.dart';
+import 'package:news_app/screens/bookmark_screen.dart';
+import 'package:news_app/screens/home_screen.dart';
+import 'package:news_app/screens/search_screen.dart';
 
 const defaultUrlToImage =
     'https://www.acbanet.org/wp-content/uploads/2014/04/news-banner.jpg';
@@ -39,19 +42,10 @@ const defaultTitle = Text(
 const TextStyle optionStyle =
     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-const List<Widget> _widgetOptions = <Widget>[
-  Text(
-    'Screen 1',
-    style: optionStyle,
-  ),
-  Text(
-    'Screen 2',
-    style: optionStyle,
-  ),
-  Text(
-    'Screen 3',
-    style: optionStyle,
-  ),
+List pages = [
+  HomeScreen(uid: authController.user.uid),
+  SearchScreen(),
+  BookmarkScreen(),
 ];
 
 // COLORS

@@ -1,5 +1,8 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:news_app/constants/constants.dart';
+import 'package:news_app/controller/home_controller.dart';
 import 'package:news_app/models/news.dart';
 import 'package:news_app/service/api_service_country.dart';
 import 'package:news_app/service/api_service_recommended.dart';
@@ -8,11 +11,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:news_app/widgets/category_tabs.dart';
 import 'package:news_app/widgets/global_news_list_tile.dart';
 import 'package:news_app/widgets/search_header.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   final String countryCategory = 'Nationwide';
   final String worldwideCategory = 'Worldwide';
-  const HomeScreen({super.key});
+  final String uid;
+  const HomeScreen({required this.uid, super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -25,10 +30,13 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<NewsData> _recommendNewsData;
   bool _isLoading = true;
   int _selectedIndex = 0;
+  final docRef = firestore.collection('users').doc('uid');
+  final HomeController homeController = Get.put(HomeController());
 
   @override
   void initState() {
     super.initState();
+    homeController.updateUserId(widget.uid);
     futureCountryNewsData = getCountryNewsData();
     futureRecommendedNewsData = getRecommendedNewsData();
 
@@ -60,41 +68,68 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // final docRef = firestore.collection('users').doc('uid');
+    // final future = updateDocument(docRef);
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.transparent,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            CircleAvatar(
-              radius: 20,
-              backgroundColor: Colors.transparent,
-              backgroundImage: NetworkImage(profileImage),
-
-              // border: Border.all(
-              //   color: Colors.white,
-              //   width: 4.0,
-              // ),
-            ),
-            SizedBox(
-              width: 15,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+        title: LayoutBuilder(
+          builder: (context, constraints) {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  "Welcome Back!",
-                  style: TextStyle(color: Colors.black54, fontSize: 14),
-                ),
-                Text(
-                  "Bon L.",
-                  style: TextStyle(color: Colors.black, fontSize: 16),
-                ),
+                _isLoading
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : GetBuilder<HomeController>(
+                        init: HomeController(),
+                        builder: (controller) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              ClipOval(
+                                child: CachedNetworkImage(
+                                  fit: BoxFit.cover,
+                                  imageUrl: controller.user['profilePhoto'],
+                                  // controller.user['profilePhoto']
+                                  height: 50,
+                                  width: 50,
+                                  placeholder: (context, url) =>
+                                      const CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(
+                                    Icons.error,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 15,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Welcome Back!",
+                                    style: TextStyle(
+                                        color: Colors.black54, fontSize: 14),
+                                  ),
+                                  Text(
+                                    controller.user['name'],
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      ),
               ],
-            ),
-          ],
+            );
+          },
         ),
         actions: [
           IconButton(

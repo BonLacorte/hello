@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'News News News',
       theme: ThemeData.light(),
       home: ResponsiveLayoutScreen(
-        mobileScreenLayout: SignupScreen(),
+        mobileScreenLayout: LoginScreen(),
         webScreenLayout: WebScreenLayout(),
       ),
       //home: SampleScreen(),

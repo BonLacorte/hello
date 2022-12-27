@@ -1,3 +1,4 @@
+import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -16,6 +17,10 @@ Future<List<NewsData>> getCountryNewsData() async {
     List _temp = [];
     String limitedTitle;
     String limitedDate;
+
+    // TESTING
+    String uid = firebaseAuth.currentUser!.uid;
+    print('$uid');
 
     for (var i in jsonResponse['articles']) {
       if (i['author'] != null &&

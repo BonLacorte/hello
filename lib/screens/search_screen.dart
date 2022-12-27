@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/category.dart';
 import 'package:news_app/widgets/category_tabs.dart';
 import 'package:news_app/widgets/search_category_card.dart';

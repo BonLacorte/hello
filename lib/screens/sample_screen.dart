@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app/constants/constants.dart';
 import 'package:news_app/screens/home_screen.dart';
 import 'package:news_app/screens/search_screen.dart';
 
@@ -10,52 +11,38 @@ class SampleScreen extends StatefulWidget {
 }
 
 class _SampleScreenState extends State<SampleScreen> {
-  int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _pages = <Widget>[
-    HomeScreen(),
-    SearchScreen(),
-    Text(
-      'Screen 3',
-      style: optionStyle,
-    ),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  int pageIdx = 0;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Sample screen'),
-      // ),
-      body: Center(
-        child: _pages.elementAt(_selectedIndex),
-      ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        onTap: (idx) {
+          setState(() {
+            pageIdx = idx;
+          });
+        },
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: backgroundColor,
+        selectedItemColor: Colors.red,
+        unselectedItemColor: Colors.white,
+        currentIndex: pageIdx,
+        items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home, size: 30),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.business),
+            icon: Icon(Icons.search, size: 30),
             label: 'Search',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.bookmark),
-            label: 'Bookmark',
+            icon: Icon(Icons.bookmark, size: 30),
+            label: 'Profile',
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue[500],
-        onTap: _onItemTapped,
       ),
+      body: pages[pageIdx],
     );
   }
 }

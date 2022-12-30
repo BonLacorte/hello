@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
-import 'package:news_app/screens/details/detail_screen_search.dart';
-import 'package:news_app/screens/details/details_screen_category.dart';
+import 'package:news_app/screens/details/details_screen_home.dart';
 
-class SearchQueryNewsListTile extends StatefulWidget {
+class CountryListTile extends StatefulWidget {
   final String? title;
   final String? author;
   final String? content;
@@ -12,16 +11,15 @@ class SearchQueryNewsListTile extends StatefulWidget {
   final String? urlToImage;
   final String? publishedAt;
   final String category;
-  final String query;
-  const SearchQueryNewsListTile(this.title, this.author, this.content, this.url,
-      this.urlToImage, this.publishedAt, this.category, this.query,
+  const CountryListTile(this.title, this.author, this.content, this.url,
+      this.urlToImage, this.publishedAt, this.category,
       {super.key});
 
   @override
-  State<SearchQueryNewsListTile> createState() => _SearchQueryNewsListTile();
+  State<CountryListTile> createState() => _CountryListTileState();
 }
 
-class _SearchQueryNewsListTile extends State<SearchQueryNewsListTile> {
+class _CountryListTileState extends State<CountryListTile> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -29,23 +27,19 @@ class _SearchQueryNewsListTile extends State<SearchQueryNewsListTile> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DetailScreenSearch(
-                widget.title,
-                widget.author,
-                widget.content,
-                widget.url,
-                widget.urlToImage,
-                widget.publishedAt,
-                widget.category,
-                widget.query,
-              ),
+              builder: (context) => DetailScreenHome(
+                  widget.title,
+                  widget.author,
+                  widget.content,
+                  widget.url,
+                  widget.urlToImage,
+                  widget.publishedAt,
+                  widget.category),
             ));
       },
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
         elevation: 10,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Container(
           width: double.infinity,
           margin: EdgeInsets.only(bottom: 10.0),
@@ -59,27 +53,30 @@ class _SearchQueryNewsListTile extends State<SearchQueryNewsListTile> {
             children: [
               Flexible(
                 flex: 3,
-                child: widget.urlToImage == 'null UrlToImage'
-                    ? Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          image: const DecorationImage(
-                            image: NetworkImage(defaultUrlToImage),
-                            fit: BoxFit.fill,
+                child: Hero(
+                  tag: "${widget.title}",
+                  child: widget.urlToImage == 'null UrlToImage'
+                      ? Container(
+                          height: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            image: const DecorationImage(
+                              image: NetworkImage(defaultUrlToImage),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                        )
+                      : Container(
+                          height: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            image: DecorationImage(
+                              image: NetworkImage(widget.urlToImage!),
+                              fit: BoxFit.fitHeight,
+                            ),
                           ),
                         ),
-                      )
-                    : Container(
-                        height: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          image: DecorationImage(
-                            image: NetworkImage(widget.urlToImage!),
-                            fit: BoxFit.fitHeight,
-                          ),
-                        ),
-                      ),
+                ),
               ),
               SizedBox(
                 width: 10,
@@ -96,7 +93,7 @@ class _SearchQueryNewsListTile extends State<SearchQueryNewsListTile> {
                                   fontWeight: FontWeight.bold),
                             )
                           : Text(
-                              '${widget.title!.substring(0, 52)}',
+                              '${widget.title!.substring(0, 52)}...',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold),

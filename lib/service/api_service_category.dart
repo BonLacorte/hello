@@ -35,7 +35,7 @@ Future<List<NewsData>> getCategoryNewsData(String category) async {
         _temp.add(i);
       }
     }
-
+    //await Future.delayed(Duration(seconds: 3));
     return NewsData.newsDataFromSnapshot(_temp);
   }
   throw Exception('Failed to load');

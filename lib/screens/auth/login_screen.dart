@@ -8,7 +8,6 @@ class LoginScreen extends StatelessWidget {
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,18 +17,18 @@ class LoginScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Tiktok Clone',
+              'Costa News',
               style: TextStyle(
-                  fontSize: 35,
-                  color: buttonColor,
+                  fontSize: 36,
+                  color: Colors.blue[500],
                   fontWeight: FontWeight.w900),
             ),
             const Text(
               'Login',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700),
             ),
             const SizedBox(
-              height: 25,
+              height: 20,
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -41,7 +40,7 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 25,
+              height: 20,
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -60,7 +59,7 @@ class LoginScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width - 40,
               height: 50,
               decoration: BoxDecoration(
-                color: buttonColor,
+                color: Colors.blue[500],
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
               ),
               child: InkWell(
@@ -81,7 +80,7 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  'Don\'t have an accout? ',
+                  'Don\'t have an account? ',
                   style: TextStyle(
                     fontSize: 20,
                   ),
@@ -94,7 +93,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                   child: Text(
                     'Register',
-                    style: TextStyle(fontSize: 20, color: buttonColor),
+                    style: TextStyle(fontSize: 20, color: Colors.blue[500]),
                   ),
                 )
               ],

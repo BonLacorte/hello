@@ -1,0 +1,18 @@
+On the search category screen detail screen
+- click on news
+- click add bookmark to add record
+- click bookmark to delete record 
+
+On the bookmarked news screen
+- load all the news as bookmarked (isBookmarked = true)
+- click bookmark to delete record 
+
+* if a news article has been saved multiple times, 
+- create a controller that maps through a list from the firebase database then scan if there's a duplicated news that also have the same UID
+- if there's a duplicated bookmarked news, it will not add it to the list and reads new
+    If(firestore.collection('bookmarked news').where() 
+
+- load the news with an if-condition
+    If(firestore.collection('bookmarked news').where().where()
+    If this is not null then the isBookmarked is false
+    If this is null then the isBookmarked is true

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
+import 'package:news_app/screens/details/detail_screen_bookmarked.dart';
 import 'package:news_app/screens/details/details_screen_category.dart';
 
-class CategoryNewsListTile extends StatefulWidget {
+class BookmarkedListTile extends StatefulWidget {
   final String? title;
   final String? author;
   final String? content;
@@ -11,15 +12,15 @@ class CategoryNewsListTile extends StatefulWidget {
   final String? urlToImage;
   final String? publishedAt;
   final String category;
-  const CategoryNewsListTile(this.title, this.author, this.content, this.url,
+  const BookmarkedListTile(this.title, this.author, this.content, this.url,
       this.urlToImage, this.publishedAt, this.category,
       {super.key});
 
   @override
-  State<CategoryNewsListTile> createState() => _CategoryNewsListTile();
+  State<BookmarkedListTile> createState() => _BookmarkedListTileState();
 }
 
-class _CategoryNewsListTile extends State<CategoryNewsListTile> {
+class _BookmarkedListTileState extends State<BookmarkedListTile> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -27,7 +28,7 @@ class _CategoryNewsListTile extends State<CategoryNewsListTile> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DetailScreenCategory(
+              builder: (context) => DetailScreenBookmarked(
                   widget.title,
                   widget.author,
                   widget.content,
@@ -85,13 +86,13 @@ class _CategoryNewsListTile extends State<CategoryNewsListTile> {
                       children: [
                         widget.title!.length < 52
                             ? Text(
-                                '${widget.title!}',
+                                '${widget.title!}...',
                                 style: TextStyle(
-                                    color: Colors.black,
+                                    color: Colors.red,
                                     fontWeight: FontWeight.bold),
                               )
                             : Text(
-                                '${widget.title!.substring(0, 52)}',
+                                '${widget.title!.substring(0, 52)}...',
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),

@@ -24,7 +24,7 @@ class _SampleScreenState extends State<SampleScreen> {
         },
         type: BottomNavigationBarType.fixed,
         backgroundColor: backgroundColor,
-        selectedItemColor: Colors.red,
+        selectedItemColor: Colors.blue[500],
         unselectedItemColor: Colors.white,
         currentIndex: pageIdx,
         items: const [
@@ -38,7 +38,7 @@ class _SampleScreenState extends State<SampleScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark, size: 30),
-            label: 'Profile',
+            label: 'Bookmark',
           ),
         ],
       ),

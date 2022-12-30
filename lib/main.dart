@@ -18,7 +18,6 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  static String categoryTabsSelected = '';
   const MyApp({super.key});
 
   @override

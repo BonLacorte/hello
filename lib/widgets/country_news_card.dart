@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
-import 'package:news_app/screens/details_screen_home.dart';
+import 'package:news_app/screens/details/details_screen_home.dart';
 
 class CountryNewsCard extends StatefulWidget {
   //final NewsData data;
@@ -49,16 +49,13 @@ class _CountryNewsCardState extends State<CountryNewsCard> {
                             widget.category),
                       ));
                 },
-                child: Hero(
-                  tag: "${widget.title}",
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: widget.urlToImage == 'null UrlToImage'
-                        ? Image.network(defaultUrlToImage,
-                            width: 300, height: 150, fit: BoxFit.fill)
-                        : Image.network(widget.urlToImage!,
-                            width: 300, height: 150, fit: BoxFit.fill),
-                  ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: widget.urlToImage == 'null UrlToImage'
+                      ? Image.network(defaultUrlToImage,
+                          width: 300, height: 150, fit: BoxFit.fill)
+                      : Image.network(widget.urlToImage!,
+                          width: 300, height: 150, fit: BoxFit.fill),
                 ),
               ),
             ),

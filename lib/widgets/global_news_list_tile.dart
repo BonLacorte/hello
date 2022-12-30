@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/constants/constants.dart';
 import 'package:news_app/models/news.dart';
-import 'package:news_app/screens/details_screen_home.dart';
+import 'package:news_app/screens/details/details_screen_home.dart';
+import 'package:news_app/screens/details/details_screen_global.dart';
 
 class GlobalListTile extends StatefulWidget {
   final String? title;
@@ -27,7 +28,7 @@ class _GlobalListTileState extends State<GlobalListTile> {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => DetailScreenHome(
+              builder: (context) => DetailScreenGlobal(
                   widget.title,
                   widget.author,
                   widget.content,
@@ -53,81 +54,80 @@ class _GlobalListTileState extends State<GlobalListTile> {
             children: [
               Flexible(
                 flex: 3,
-                child: Hero(
-                  tag: "${widget.title}",
-                  child: widget.urlToImage == 'null UrlToImage'
-                      ? Container(
-                          height: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            image: const DecorationImage(
-                              image: NetworkImage(defaultUrlToImage),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        )
-                      : Container(
-                          height: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            image: DecorationImage(
-                              image: NetworkImage(widget.urlToImage!),
-                              fit: BoxFit.fitHeight,
-                            ),
+                child: widget.urlToImage == 'null UrlToImage'
+                    ? Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          image: const DecorationImage(
+                            image: NetworkImage(defaultUrlToImage),
+                            fit: BoxFit.fill,
                           ),
                         ),
-                ),
+                      )
+                    : Container(
+                        height: 100,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          image: DecorationImage(
+                            image: NetworkImage(widget.urlToImage!),
+                            fit: BoxFit.fitHeight,
+                          ),
+                        ),
+                      ),
               ),
               SizedBox(
                 width: 10,
               ),
               Flexible(
                   flex: 5,
-                  child: Column(
-                    children: [
-                      widget.title!.length < 52
-                          ? Text(
-                              '${widget.title!}...',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            )
-                          : Text(
-                              '${widget.title!.substring(0, 52)}...',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        widget.title!.length < 52
+                            ? Text(
+                                '${widget.title!}...',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            : Text(
+                                '${widget.title!.substring(0, 52)}...',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                        SizedBox(
+                          height: 8.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              '${widget.content!.substring(0, 25)}...',
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(color: Colors.black54),
                             ),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            '${widget.content!.substring(0, 27)}...',
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(color: Colors.black54),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 8.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.publishedAt!,
-                            style: TextStyle(
-                              color: Colors.black54,
-                              fontSize: 14,
-                              fontWeight: FontWeight.normal,
+                          ],
+                        ),
+                        SizedBox(
+                          height: 8.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              widget.publishedAt!,
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 14,
+                                fontWeight: FontWeight.normal,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ))
             ],
           ),

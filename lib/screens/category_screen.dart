@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/models/news.dart';
 import 'package:news_app/service/api_service_category.dart';
-import 'package:news_app/service/api_service_recommended.dart';
+import 'package:news_app/service/api_service_worldwide.dart';
 import 'package:news_app/widgets/category_news_list_tile.dart';
 import 'package:news_app/widgets/global_news_list_tile.dart';
 
@@ -89,6 +89,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               ListView.builder(
+                                controller: ScrollController(),
                                 itemCount: news.length,
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) =>

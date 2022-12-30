@@ -37,6 +37,7 @@ Future<List<NewsData>> getCountryNewsData() async {
         _temp.add(i);
       }
     }
+    //await Future.delayed(Duration(seconds: 3));
     return NewsData.newsDataFromSnapshot(_temp);
 
     //return Product.fromJson(jsonDecode(res.body));

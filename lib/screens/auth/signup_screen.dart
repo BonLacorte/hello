@@ -18,18 +18,18 @@ class SignupScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Tiktok Clone',
+              'Costa News',
               style: TextStyle(
-                  fontSize: 35,
-                  color: buttonColor,
+                  fontSize: 36,
+                  color: Colors.blue[500],
                   fontWeight: FontWeight.w900),
             ),
             const Text(
               'Register',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+              style: TextStyle(fontSize: 26, fontWeight: FontWeight.w700),
             ),
             const SizedBox(
-              height: 25,
+              height: 20,
             ),
             Stack(
               children: [
@@ -37,7 +37,7 @@ class SignupScreen extends StatelessWidget {
                   radius: 64,
                   // backgroundImage: NetworkImage(
                   //     'https://www.pngitem.com/pimgs/m/150-1503945_transparent-user-png-default-user-image-png-png.png'),
-                  backgroundColor: Colors.red,
+                  backgroundColor: Colors.blue,
                 ),
                 Positioned(
                   bottom: -10,
@@ -52,7 +52,7 @@ class SignupScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(
-              height: 25,
+              height: 20,
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -64,7 +64,7 @@ class SignupScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 25,
+              height: 20,
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -76,7 +76,7 @@ class SignupScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 25,
+              height: 20,
             ),
             Container(
               width: MediaQuery.of(context).size.width,
@@ -95,7 +95,7 @@ class SignupScreen extends StatelessWidget {
               width: MediaQuery.of(context).size.width - 40,
               height: 50,
               decoration: BoxDecoration(
-                color: buttonColor,
+                color: Colors.blue[500],
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
               ),
               child: InkWell(
@@ -134,7 +134,7 @@ class SignupScreen extends StatelessWidget {
                   ),
                   child: Text(
                     'Login',
-                    style: TextStyle(fontSize: 20, color: buttonColor),
+                    style: TextStyle(fontSize: 20, color: Colors.blue[500]),
                   ),
                 )
               ],

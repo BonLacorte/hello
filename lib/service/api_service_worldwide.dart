@@ -2,7 +2,7 @@ import 'package:news_app/models/news.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-Future<List<NewsData>> getRecommendedNewsData() async {
+Future<List<NewsData>> getWorldwideNewsData() async {
   final apiKey = '53d9af9fab3f492da11dfdbb69a1dcac';
   final url =
       'https://newsapi.org/v2/top-headlines?country=us&apiKey=53d9af9fab3f492da11dfdbb69a1dcac';
@@ -32,6 +32,7 @@ Future<List<NewsData>> getRecommendedNewsData() async {
         _temp.add(i);
       }
     }
+    //await Future.delayed(Duration(seconds: 3));
     return NewsData.newsDataFromSnapshot(_temp);
 
     //return Product.fromJson(jsonDecode(res.body));

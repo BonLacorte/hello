@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:news_app/constants/constants.dart';
 import 'package:news_app/screens/auth/login_screen.dart';
-import 'package:news_app/screens/auth/signup_screen.dart';
 import 'package:news_app/screens/sample_screen.dart';
 import 'package:news_app/models/user.dart' as model;
 
@@ -36,7 +35,6 @@ class AuthController extends GetxController {
   }
 
   void pickImage() async {
-    print('I am at pickImage');
     final pickedImage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
@@ -127,5 +125,9 @@ class AuthController extends GetxController {
         e.toString(),
       );
     }
+  }
+
+  signOut() async {
+    await firebaseAuth.signOut();
   }
 }
